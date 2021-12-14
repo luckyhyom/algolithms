@@ -8,7 +8,7 @@ function concats2(arr,arr2) {
     let result = [];
     let n = arr.length;
     let m = arr2.length;
-    let p1, p2 = 0;
+    let p1=p2=0;
 
     while (p1 < n && p2 < m) {
         if (arr[p1] < arr2[p2]) result.push(arr[p1++]);
@@ -19,4 +19,4 @@ function concats2(arr,arr2) {
     return result;
 }
 
-console.log(concats(input,input2));
+console.log(concats2(input,input2));
