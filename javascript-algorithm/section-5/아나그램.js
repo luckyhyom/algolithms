@@ -1,5 +1,4 @@
 function mySolution(word, word2) {
-
     if (word.length !== word2.length) {
         return 'NO'
     }
@@ -8,18 +7,8 @@ function mySolution(word, word2) {
     const b = {};
 
     for (let i = 0; i < word.length; i++) {
-        if (a[word[i]] === undefined) {
-            a[word[i]] = 1;
-            console.log(a[word[i]]);
-        } else {
-            a[word[i]]++;
-        }
-
-        if (b[word2[i]] === undefined) {
-            b[word2[i]] = 1;
-        } else {
-            b[word2[i]]++;
-        }
+        a[word[i]] = add(a[word[i]]);
+        b[word2[i]] = add(b[word2[i]]);
     }
 
     for (const key in a) {
@@ -29,6 +18,10 @@ function mySolution(word, word2) {
     }
 
     return 'YES';
+}
+
+function add(value) {
+    return value === undefined ? 1 : value += 1;
 }
 
 let word = 'AbaAeCe';

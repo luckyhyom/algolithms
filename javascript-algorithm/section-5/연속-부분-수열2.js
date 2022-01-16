@@ -13,6 +13,19 @@ function mySolution(arr, expected) {
         }
         count += (lt-rt+1);
     }
+
+
+    while (ri < arr.length) {
+        if (sum <= m) {
+            answer += (ri - li + 1);
+            ri++;
+            sum += arr[ri];
+        } else {
+            sum -= arr[li];
+            li++;
+        }
+    }
+    
     return result;
 }
 
