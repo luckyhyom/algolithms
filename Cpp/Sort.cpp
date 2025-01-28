@@ -12,7 +12,7 @@ void MySort(int& a, int& b) {
   if(a < b) {
     int temp = a;
     a = b;
-    b = a;
+    b = temp;
   }
 }
 
@@ -27,11 +27,20 @@ int main() {
         for (int e = 0; e < size; e++) {
           std::cout << arr[e] << " " << std::flush;
         }
+        
+        std::cout << '\n' << std::flush;
 
         // 정렬
-        MySort(arr[0], arr[1]);
-        MySort(arr[0], arr[2]);
-        MySort(arr[1], arr[2]);
+        //MySort(arr[0], arr[1]);
+        //MySort(arr[0], arr[2]);
+        //MySort(arr[1], arr[2]);
+
+        for (int i = 0; i < 3; i++) {
+          for (int j = i+1; j < 3; j++) {
+            MySort(arr[i], arr[j]);
+          }
+        }
+        
 
         for (int e = 0; e < size; e++) {
           std::cout << arr[e] << " " << std::flush;
