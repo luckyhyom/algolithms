@@ -64,7 +64,13 @@
       "unordered_map": "cpp",
       "variant": "cpp",
       "vector": "cpp",
-      "algorithm": "cpp"
+      "algorithm": "cpp",
+      "__verbose_abort": "cpp",
+      "deque": "cpp",
+      "execution": "cpp",
+      "print": "cpp",
+      "queue": "cpp",
+      "stack": "cpp"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang++"
 }
