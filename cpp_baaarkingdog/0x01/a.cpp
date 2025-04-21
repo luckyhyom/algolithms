@@ -22,6 +22,26 @@ int func2(int arr[], int N) {
   return 0;
 }
 
+// O(√N)
+int func3(int N) {
+  // N대신 31623도 가능
+  for (size_t i = 0; i <= N; i++){
+    if(N == i*i) return 1;
+  }
+  return 0;
+}
+
+// O(log N)
+int func4(int N) {
+  int result = 1;
+  for (size_t i = 1; i <= N; i++) {
+    if(result * 2 <= N) {
+      result *= 2;
+    };
+  }
+  return result;
+}
+
 int main() {
   std::cout << func1(16) << std::endl;
   std::cout << func1(34567) << std::endl;
@@ -33,4 +53,12 @@ int main() {
   std::cout << func2(arr1, 3) << std::endl;
   std::cout << func2(arr2, 2) << std::endl;
   std::cout << func2(arr3, 4) << std::endl;
+  
+  std::cout << func3(9) << std::endl;
+  std::cout << func3(693953651) << std::endl;
+  std::cout << func3(756580036) << std::endl;
+
+  std::cout << func4(5) << std::endl;
+  std::cout << func4(97625282) << std::endl;
+  std::cout << func4(1024) << std::endl;
 }
