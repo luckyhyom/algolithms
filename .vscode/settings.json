@@ -70,7 +70,26 @@
       "execution": "cpp",
       "print": "cpp",
       "queue": "cpp",
-      "stack": "cpp"
+      "stack": "cpp",
+      "__tree": "cpp",
+      "cfenv": "cpp",
+      "charconv": "cpp",
+      "cinttypes": "cpp",
+      "condition_variable": "cpp",
+      "csetjmp": "cpp",
+      "csignal": "cpp",
+      "forward_list": "cpp",
+      "fstream": "cpp",
+      "future": "cpp",
+      "iomanip": "cpp",
+      "list": "cpp",
+      "map": "cpp",
+      "regex": "cpp",
+      "scoped_allocator": "cpp",
+      "set": "cpp",
+      "typeindex": "cpp",
+      "unordered_set": "cpp",
+      "valarray": "cpp"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang++"
 }
