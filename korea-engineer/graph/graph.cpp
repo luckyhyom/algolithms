@@ -1,22 +1,13 @@
 #include <iostream>
 
-/**
- * Graph가 Node를 하나 가지고 있고..
- * 
- * 1. 시작 노드를 마음대로 정할 수 있는건가? 처음에 정해놓고.. 다르면 찾아서 시작해야하는거겠지?
- * 
- * 2. Node를 추가하는 방법은?
- * - A와 B,C,D 연결, C에 E연결.. -> 이름은 변수로? 혹은 멤버변수?
- * 
- */
 
-
+template <typename T>
 class LinkedList {
     class Node {
         public:
-        int data;
+        T data;
         Node* next = nullptr;
-        Node(int data): data(data) {}
+        Node(T data): data(data) {}
     };
 
     Node *head = nullptr;
@@ -24,7 +15,7 @@ class LinkedList {
     public:
     LinkedList() {};
 
-    void add(int data) {
+    void add(T data) {
         if(head == nullptr) {
             head = new Node(data);
             currentNode = head;
@@ -39,7 +30,6 @@ class LinkedList {
         }
     }
 
-    // 계속 현재 위치의 원소를 기억해야하는건가? 아니면 head만 조회해서 사용하나?
     LinkedList* next() {
         if(currentNode == nullptr) {
             currentNode = head;
@@ -49,7 +39,7 @@ class LinkedList {
         return this;
     }
 
-    int getValue() {
+    T getValue() {
         if(currentNode == nullptr) {
             return 0;
         }
@@ -116,26 +106,55 @@ class Queue {
 class Graph {
     class Node {
         int data;
-        LinkedList<Node*> adjacent;
+        LinkedList<Node*> adjacent; // Node can be connected another nodes
     };
 
-    public:
-    
-    /**
-     * Q1. 요소를 어떻게 추가하지?
-     * 
-     * A) 임의의 요소에 추가 A,B,C가 있을때 B에 D를 추가하고싶다..
-     * B) 요소 추가 시 자동 정렬
-     * 
-     * Q2. node가 root로서 1개면 tree, node가 list로 정의되어있으면 그래프?
-     * 
-     */
-    void add() {
+    LinkedList<Node*> nodes = new LinkedList<Node*>();
 
+    public:
+
+    Graph(int nodes_lenth) {}
+
+    /**
+     * How to add element
+     * A) 
+     * - add(A, B);
+     * - add(B, C);
+     * - add(C, A);
+     * 
+     * B) Sort
+     * - add(A)
+     * - add(B)
+     * - add(C)
+     * 
+     * Q2. Tree has only one node as root. Graph has many nodes in list as member ?
+     */
+
+    // Task 1. 중복 검사를 위해 bfs 먼저 구현해야한다.
+    void addEdge(int a, int b) {
+        // 1. a를 검색한다.
+        // 1-1. a가 없으면 a를 생성 후 리스트에 추가한다.
+        // 3. b를 검색한다.
+        // 3-1. b가 없으면 b를 생성 후 리스트에 추가한다.
+        // 5. a와 b를 연결한다.
     }
 
-    void BFS() {
 
+    // Note: 작업을 중간에 멈추더라도 최소한 정리는 해야된다. 풀려는 문제가 뭐였고 중간 과정의 문제를 명확하게 정의해야한다! 정리를 해놔야 작업을 이어서 할 수 있고 기억에도 남는다. 그리고 글로 적어야 정리가 된다.
+    
+    // Task 2.
+    void bfs(int a = 0) {
+        // 매개변수와 같은 값을 가진 노드를 조회한다.
+
+        // 해당 노드를 enqueue
+
+        // 큐에서 노드 하나를 pop하고 프린트
+
+        // pop한 노드의 인접 노드를 enqueue
+
+        // 큐에서 노드 하나를 pop하고 프린트
+
+        // pop한 노드의 인접 노드를 enqueue
     }
 };
 
@@ -144,5 +163,29 @@ class Graph {
  */
 
 int main () {
+    // interface 힌트 얻기 - 연결할 두개의 요소를 인자로 입력한다.
+    Graph g = new Graph(9);
+    g.addEdge(0, 1);
+    g.addEdge(1, 2);
+    g.addEdge(1, 3);
+    g.addEdge(2, 4);
+    g.addEdge(2, 3);
+    g.addEdge(3, 4);
+    g.addEdge(3, 5);
+    g.addEdge(5, 6);
+    g.addEdge(5, 7);
+    g.addEdge(6, 8);
+    g.bfs(0);
+    g.bfs(3);
     return 0;
 }
+
+/**
+ * BFS(0)
+ * 0 1 2 3 4 5 6 7 8
+ * 
+ * ------------------
+ * 
+ * BFS(3)
+ * 3 1 2 4 5 0 6 7 8
+ */
