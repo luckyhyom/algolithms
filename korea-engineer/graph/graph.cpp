@@ -1,4 +1,5 @@
 #include <iostream>
+#include <optional>
 
 
 template <typename T>
@@ -29,21 +30,27 @@ class LinkedList {
             nextNode->next = new Node(data);
         }
     }
-
+    // currentNode가 nullptr일 경우 마지막 Node라는 의미다.
     LinkedList* next() {
         if(currentNode == nullptr) {
-            currentNode = head;
             return this;
         }
         currentNode = currentNode->next;
         return this;
     }
 
-    T getValue() {
+    // currentNode가 마지막 node에 도달하였을 경우 처음 Node로 초기화한다.
+    LinkedList* setToHead() {
+        currentNode = head;
+        return this;
+    }
+
+    // std::optional 대신 pointer를 활용한다.
+    T* getValue() {
         if(currentNode == nullptr) {
-            return 0;
+            return nullptr;
         }
-        return currentNode->data;
+        return &currentNode->data;
     }
 };
 
@@ -105,43 +112,81 @@ class Queue {
 
 class Graph {
     class Node {
+        public:
         int data;
         LinkedList<Node*> adjacent; // Node can be connected another nodes
+        Node(int data): data(data) {
+            adjacent = LinkedList<Node*>();
+        };
     };
 
-    LinkedList<Node*> nodes = new LinkedList<Node*>();
+    LinkedList<Node*> nodes = LinkedList<Node*>();
 
     public:
 
     Graph(int nodes_lenth) {}
 
-    /**
-     * How to add element
-     * A) 
-     * - add(A, B);
-     * - add(B, C);
-     * - add(C, A);
-     * 
-     * B) Sort
-     * - add(A)
-     * - add(B)
-     * - add(C)
-     * 
-     * Q2. Tree has only one node as root. Graph has many nodes in list as member ?
-     */
-
-    // Task 1. 중복 검사를 위해 bfs 먼저 구현해야한다.
     void addEdge(int a, int b) {
+        Node* node;
+        Node* find_a = nullptr;
+        Node* find_b = nullptr;
+        if(nodes.getValue() != nullptr) {
+            node = *(nodes.getValue()); // subtask 1) head Node를 조회할 수 있도록 개선할 것? 애초에 데이터만 조회가 가능한가..
+        } else {
+            find_a = new Node(a);
+            nodes.add(find_a);
+        }
+
         // 1. a를 검색한다.
+        while (node != nullptr) {
+            if(node->data == a) {
+                find_a = node;
+                break;
+            }
+
+            if(nodes.next()->getValue() != nullptr) {
+                node = *(nodes.getValue()); // subtask) nullptr이므로 접근하면 오류 발생, 더 나은 코드는?
+            } else {
+                node = nullptr;
+            }
+        }
+
+        node = *nodes.setToHead()->getValue();
         // 1-1. a가 없으면 a를 생성 후 리스트에 추가한다.
+        if(find_a == nullptr) {
+            find_a = new Node(a);
+            nodes.add(find_a);
+        }
+
         // 3. b를 검색한다.
+        while (node != nullptr) {
+            if(node->data == b) {
+                find_b = node;
+                break;
+            }
+            if(nodes.next()->getValue() != nullptr) {
+                node = *(nodes.getValue());
+            } else {
+                node = nullptr;
+            }
+        }
+
         // 3-1. b가 없으면 b를 생성 후 리스트에 추가한다.
+        if(find_b == nullptr) {
+            find_b = new Node(b);
+            nodes.add(find_b);
+        }
+
         // 5. a와 b를 연결한다.
+        find_a->adjacent.add(find_b);
+        find_b->adjacent.add(find_a);
+
+        // reset current node
+        nodes.setToHead();
     }
 
 
     // Note: 작업을 중간에 멈추더라도 최소한 정리는 해야된다. 풀려는 문제가 뭐였고 중간 과정의 문제를 명확하게 정의해야한다! 정리를 해놔야 작업을 이어서 할 수 있고 기억에도 남는다. 그리고 글로 적어야 정리가 된다.
-    
     // Task 2.
     void bfs(int a = 0) {
         // 매개변수와 같은 값을 가진 노드를 조회한다.
@@ -164,19 +209,19 @@ class Graph {
 
 int main () {
     // interface 힌트 얻기 - 연결할 두개의 요소를 인자로 입력한다.
-    Graph g = new Graph(9);
-    g.addEdge(0, 1);
-    g.addEdge(1, 2);
-    g.addEdge(1, 3);
-    g.addEdge(2, 4);
-    g.addEdge(2, 3);
-    g.addEdge(3, 4);
-    g.addEdge(3, 5);
-    g.addEdge(5, 6);
-    g.addEdge(5, 7);
-    g.addEdge(6, 8);
-    g.bfs(0);
-    g.bfs(3);
+    Graph* g = new Graph(9);
+    g->addEdge(0, 1);
+    g->addEdge(1, 2);
+    g->addEdge(1, 3);
+    g->addEdge(2, 4);
+    g->addEdge(2, 3);
+    g->addEdge(3, 4);
+    g->addEdge(3, 5);
+    g->addEdge(5, 6);
+    g->addEdge(5, 7);
+    g->addEdge(6, 8);
+    g->bfs(0);
+    g->bfs(3);
     return 0;
 }
 
