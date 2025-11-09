@@ -23,3 +23,19 @@ int main() {
 1. LinkedList라는 컨테이너를 Node위에 덧씌워 관리함으로 인해 헷갈리는 부분이 있는 것 같은데, 그것이 무엇인지 명확하게 알았으면 좋겠다.
 2. 그리고 LinkedList라는 컨테이너를 만드는 목적을 명확하게 알자
 3. 지금 이것을 학습하는 이유는? 프로그래밍의 가장 기본이 되는 지식이며 흥미가 없지 않기 때문이다.
+
+### 포인터
+
+> last와 this->header->next는 다른 개체다.
+> 할당되는 메모리 주소가 다르며 값만 공유할 수 있을 뿐이다.
+
+```cpp
+  // ❌
+  void append(int n) {
+    Node *last = this->header->next;
+    while (last != nullptr) {
+      last = last->next;
+    }
+    last = new Node(n);
+  }
+```
