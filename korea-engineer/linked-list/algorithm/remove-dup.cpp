@@ -1,5 +1,9 @@
 #include <iostream>
 
+/**
+ * Size Complexity: O(1)
+ * Time Complexity: O(N)
+ */
 class LinkList {
     class Node {
        public:
@@ -38,9 +42,10 @@ class LinkList {
     void retrieve() {
         Node* last = header;
         while (last->next != nullptr) {
-            std::cout << last->next->data << std::endl;
+            std::cout << last->next->data << " -> ";
             last = last->next;
         }
+        std::cout << "END" << std::endl;
     }
 
     void removeDups() {
