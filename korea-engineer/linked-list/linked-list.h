@@ -1,8 +1,9 @@
-class LinkList {
+class LinkedList {
    public:
-    LinkList() {};
+    LinkedList();
     void append(int n);
     void remove(int n);
-    void retrieve() {};
-    void removeDups() {};
+    void retrieve();
+    void removeDups();
+    void printKthFromEnd(int n);
 };
