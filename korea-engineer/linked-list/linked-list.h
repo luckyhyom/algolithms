@@ -6,4 +6,6 @@ class LinkedList {
     void retrieve();
     void removeDups();
     void printKthFromEnd(int n);
+    void deleteNode(int index);
+    void reset();
 };
