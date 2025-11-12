@@ -2,23 +2,28 @@
 
 class LinkedList {
     class Node {
+        Node(int n, int id) : data(n), id(id) {}
+
        public:
         int data;
-        Node* next = nullptr;
-        Node(int n) : data(n) {}
+        Node* next;
+        int id;
+
+        static Node* CreateNode() { return new Node(0, 0); }
+        void append(int n) { this->next = new Node(n, id + 1); }
     };
 
     Node* header;
 
    public:
-    LinkedList() { header = new Node(0); }
+    LinkedList() { header = Node::CreateNode(); }
 
     void append(int n) {
         Node* last = header;
         while (last->next != nullptr) {
             last = last->next;
         }
-        last->next = new Node(n);
+        last->append(n);
     }
 
     void remove(int n) {
