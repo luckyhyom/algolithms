@@ -143,6 +143,9 @@ class LinkedList {
             }
         }
 
+        /**
+         * Node 혹은 data를 순차적으로 외부에 반환해야한다. 📌
+         */
         lager->resetToHead();
         while (lager->next() != false) {
             this->append(lager->getData());
