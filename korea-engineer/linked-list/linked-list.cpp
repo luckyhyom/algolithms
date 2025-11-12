@@ -40,18 +40,20 @@ class LinkedList {
     }
 
     void retrieve() {
-        Node* n = header;
-        while (n->next != nullptr) {
-            std::cout << n->next->data << std::endl;
-            n = n->next;
+        Node* last = header;
+        std::cout << "HEAD -> ";
+        while (last->next != nullptr) {
+            std::cout << last->next->data << " -> ";
+            last = last->next;
         }
+        std::cout << "END" << std::endl;
     }
 
     void removeDups() {
-        Node* n = header;
-
+        Node* n = header->next;
         while (n != nullptr && n->next != nullptr) {
             Node* r = n;
+
             while (r->next != nullptr) {
                 if (n->data == r->next->data) {
                     Node* found = r->next;
@@ -61,21 +63,14 @@ class LinkedList {
                     r = r->next;
                 }
             }
+
             n = n->next;
         }
     }
 
-    void printKthFromEnd(int n) {
-        if (n <= 0) {
-            std::cout << "n shoud be lager than 0" << std::endl;
-            return;
-        }
-
+    void printKthFromEnd(int k) {
         int count = 0;
-        Node* result = kthFromEnd(header->next, n, &count);
-        if (result == nullptr) {
-            std::cout << "No Result" << std::endl;
-        }
+        kthFromEnd(header->next, k, &count);
     }
 
     void deleteNode(int index) {
@@ -112,18 +107,17 @@ class LinkedList {
     }
 
    private:
-    Node* kthFromEnd(Node* node, int n, int* count) {
-        Node* result;
-        if (node->next != nullptr) {
-            result = kthFromEnd(node->next, n, count);
-
+    Node* kthFromEnd(Node* node, int k, int* count) {
+        Node* result = nullptr;
+        if (node != nullptr && node->next != nullptr) {
+            result = kthFromEnd(node->next, k, count);
             if (result != nullptr) {
                 return result;
             }
         }
 
         ++(*count);
-        if (n == *count) {
+        if (*count == k) {
             std::cout << node->data << std::endl;
             result = node;
         } else {
@@ -140,23 +134,17 @@ int main() {
     ll.append(2);
     ll.append(3);
     ll.append(4);
-
     ll.printKthFromEnd(1);  // 4
     ll.printKthFromEnd(2);  // 3
     ll.printKthFromEnd(3);  // 2
     ll.printKthFromEnd(4);  // 1
-    ll.printKthFromEnd(5);  // No Result
-    ll.printKthFromEnd(0);  // n shoud be lager than 0
-
     ll.retrieve();
+
     ll.reset();
-    ll.retrieve();
-
     ll.append(1);
     ll.append(2);
     ll.append(3);
     ll.append(4);
-
     int index = 2;
     ll.deleteNode(index);
     ll.retrieve();  // 1,3,4
