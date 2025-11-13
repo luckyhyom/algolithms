@@ -1,6 +1,7 @@
 #include <iostream>
 
 class LinkedList {
+   public:
     class Node {
         Node(int n, int id) : data(n), id(id) {}
 
@@ -16,7 +17,6 @@ class LinkedList {
     Node* header;
     Node* currentNode;
 
-   public:
     LinkedList() {
         header = Node::CreateNode();
         currentNode = header;
@@ -119,6 +119,17 @@ class LinkedList {
         }
     };
 
+    Node* get(int index) {
+        Node* result = header;
+        for (size_t i = 0; i < index; i++) {
+            result = result->next;
+            if (result == nullptr) {
+                std::cout << "get method return nullptr" << std::endl;
+            }
+        }
+        return result;
+    }
+
     void resetToHead() { currentNode = header; }
 
     int getData() {
@@ -143,6 +154,9 @@ class LinkedList {
             }
         }
 
+        /**
+         * Node 혹은 data를 순차적으로 외부에 반환해야한다. 📌
+         */
         lager->resetToHead();
         while (lager->next() != false) {
             this->append(lager->getData());
@@ -202,6 +216,11 @@ int main() {
     ll.retrieve();
     ll.partition(5);
     ll.retrieve();  // 2,3,4,5,8,7
+
+    LinkedList::Node* n1 = ll.get(2);  // 3
+    std::cout << n1->data << std::endl;
+    LinkedList::Node* n2 = ll.get(3);  // 4
+    std::cout << n2->data << std::endl;
 
     return 0;
 }
