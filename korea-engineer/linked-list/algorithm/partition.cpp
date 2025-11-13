@@ -140,51 +140,29 @@ class LinkedList {
     };
 
     static Node* partition(Node* node, int x) {
-        Node* s1 = nullptr;
-        Node* e1 = nullptr;
-        Node* s2 = nullptr;
-        Node* e2 = nullptr;
+        Node* head = node;
+        Node* tail = node;
 
+        // node의 값이 수정된다는 것을 유의해야한다. (node의 값이 수정되어서 헷갈림)
         while (node != nullptr) {
             Node* next = node->next;
             node->next = nullptr;
             if (node->data < x) {
-                if (s1 == nullptr) {
-                    s1 = node;
-                    e1 = s1;
-                } else {
-                    e1->next = node;  // 첫번째 다음에 나를 추가
-                    e1 = node;        // 내가 마지막
-                }
+                node->next = head;
+                head = node;
             } else {
-                if (s2 == nullptr) {
-                    s2 = node;
-                    e2 = s2;
-                } else {
-                    e2->next = node;
-                    e2 = node;
-                }
+                tail->next = node;
+                tail = node;
             }
-
-            node = node->next;
+            node = next;
         }
 
-        Node* result = nullptr;
-        if (s1 != nullptr && s2 != nullptr) {
-            e1->next = s2;
-            result = s1;
-        } else if (s1 != nullptr && s2 == nullptr) {
-            result = s1;
-        } else if (s1 == nullptr && s2 != nullptr) {
-            result = s2;
-        }
-
-        return result;
+        return head;
     }
 
     // Node* partition2(int x) {}
 
-    void partition3(int x) {
+    void partitionV2(int x) {
         Node* node = header;
         LinkedList* lager = new LinkedList();
         while (node != nullptr && node->next != nullptr) {
@@ -272,7 +250,6 @@ int main() {
         sorted = sorted->next;
     }
     std::cout << sorted->data << std::endl;
-
     ll.retrieve();  // 원본 훼손됨
 
     return 0;

@@ -139,7 +139,30 @@ class LinkedList {
         return 0;
     };
 
-    void partition(int x) {
+    static Node* partition(Node* node, int x) {
+        Node* head = node;
+        Node* tail = node;
+
+        // node의 값이 수정된다는 것을 유의해야한다. (node의 값이 수정되어서 헷갈림)
+        while (node != nullptr) {
+            Node* next = node->next;
+            node->next = nullptr;
+            if (node->data < x) {
+                node->next = head;
+                head = node;
+            } else {
+                tail->next = node;
+                tail = node;
+            }
+            node = next;
+        }
+
+        return head;
+    }
+
+    // Node* partition2(int x) {}
+
+    void partitionV2(int x) {
         Node* node = header;
         LinkedList* lager = new LinkedList();
         while (node != nullptr && node->next != nullptr) {
@@ -214,13 +237,20 @@ int main() {
     ll.append(3);
     ll.append(4);
     ll.retrieve();
-    ll.partition(5);
-    ll.retrieve();  // 2,3,4,5,8,7
 
-    LinkedList::Node* n1 = ll.get(2);  // 3
+    LinkedList::Node* n1 = ll.get(2);  // 5
     std::cout << n1->data << std::endl;
-    LinkedList::Node* n2 = ll.get(3);  // 4
+    LinkedList::Node* n2 = ll.get(3);  // 2
     std::cout << n2->data << std::endl;
+
+    // ll.partition(5);
+    LinkedList::Node* sorted = LinkedList::partition(ll.get(1), 5);
+    while (sorted->next != nullptr) {
+        std::cout << sorted->data << "->";
+        sorted = sorted->next;
+    }
+    std::cout << sorted->data << std::endl;
+    ll.retrieve();  // 원본 훼손됨
 
     return 0;
 }

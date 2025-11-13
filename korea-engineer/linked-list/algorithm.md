@@ -21,3 +21,5 @@ if(..) {
 ### x를 기준으로 작은 것은 왼쪽, 큰 것은 오른쪽으로 나누기
 - LinkedList를 두개 사용한다.
 - LinkedList에 있는 데이터를 외부에서 다루기 위해 데이터를 반환해야한다. (현재까지는 로그만 출력함)
+
+> node->next = nullptr;  // node가 마지막 node가 되어야하는 경우 next를 nullptr로 만들어야한다.
