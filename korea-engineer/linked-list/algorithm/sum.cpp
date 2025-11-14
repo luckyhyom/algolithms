@@ -3,12 +3,6 @@
 #include "../linked-list.cpp"
 
 /**
- * 1. 길이
- * 2. 자릿수
- * 3. 자릿수 초과할 경우 다음으로 넘기기
- */
-
-/**
  * 결과 값 2473 구한다음
  * 0.1 곱한 후 소수점을 더하고 소수점 제거 반복
  * 언제까지? total이 0이거나 0보다 작을 때 까지
@@ -20,19 +14,19 @@ LinkedList* sum_v1(LinkedList* ll, LinkedList* ll2) {
     LinkedList::Node* second = ll2->get(1);
 
     double total = 0;
-    int digits = 1;
+    int digit = 1;
     while (first != nullptr) {
-        total += first->data * digits;
+        std::cout << "digit: " << digit << std::endl;
+        total += first->data * digit;
         first = first->next;
-        digits *= 10;
-        std::cout << digits << std::endl;
+        digit *= 10;
     }
 
-    digits = 1;
+    digit = 1;
     while (second != nullptr) {
-        total += second->data * digits;
+        total += second->data * digit;
         second = second->next;
-        digits *= 10;
+        digit *= 10;
     }
 
     while (total > 0) {
@@ -41,6 +35,69 @@ LinkedList* sum_v1(LinkedList* ll, LinkedList* ll2) {
         int n = (total - temp) * 10;
         result->append(n);
         total = temp;
+    }
+
+    return result;
+}
+
+/**
+ * 1. 길이
+ * 2. 자릿수
+ * 3. 자릿수 초과할 경우 다음으로 넘기기
+ */
+LinkedList* sum_v2(LinkedList* ll, LinkedList* ll2) {
+    LinkedList* result = new LinkedList();
+    LinkedList::Node* first = ll->get(1);
+    LinkedList::Node* second = ll2->get(1);
+
+    int length = 0;
+
+    int length1 = 0;
+    while (first != nullptr) {
+        first = first->next;
+        ++length1;
+    }
+
+    int length2 = 0;
+    while (second != nullptr) {
+        second = second->next;
+        ++length2;
+    }
+
+    if (length1 > length2) {
+        length = length1;
+    } else {
+        length = length2;
+    }
+
+    first = ll->get(1);
+    second = ll2->get(1);
+
+    int digit = 1;
+    int temp = 0;
+    for (size_t i = 0; i < length; ++i) {
+        int r = temp;
+        if (first != nullptr) {
+            r += first->data * digit;
+            first = first->next;
+        }
+        if (second != nullptr) {
+            r += second->data * digit;
+            second = second->next;
+        }
+
+        std::cout << r << std::endl;
+
+        int nextDigit = digit * 10;
+        if (r >= nextDigit) {
+            temp = nextDigit;
+            result->append((r - nextDigit) / digit);
+        } else {
+            result->append(r / digit);
+            temp = 0;
+        }
+
+        digit = nextDigit;
     }
 
     return result;
@@ -71,4 +128,7 @@ int main() {
     // 1234 + 1239 = 2473
     LinkedList* result = sum_v1(&ll, &ll2);
     result->retrieve();
+
+    LinkedList* result2 = sum_v2(&ll, &ll2);
+    result2->retrieve();
 }
