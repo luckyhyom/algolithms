@@ -8,4 +8,7 @@ class LinkedList {
     void printKthFromEnd(int n);
     void deleteNode(int index);
     void reset();
+    void resetToHead();
+    static Node* partition(Node* node, int x);
+    int getData();
 };
