@@ -3,15 +3,17 @@
 class LinkedList {
    public:
     class Node {
-        Node(int n, int id) : data(n), id(id) {}
-
        public:
+        Node(int n, int id) : data(n), id(id) {}
         int data;
         Node* next;
         int id;
 
         static Node* CreateNode() { return new Node(0, 0); }
-        void append(int n) { this->next = new Node(n, id + 1); }
+        void append(Node* n) {
+            n->id = this->id + 1;
+            this->next = n;
+        }
     };
 
     Node* header;
@@ -22,7 +24,16 @@ class LinkedList {
         currentNode = header;
     }
 
-    void append(double n) {
+    void append(int n) {
+        Node* last = header;
+        while (last->next != nullptr) {
+            last = last->next;
+        }
+        Node* created = new Node(n, 1);
+        last->append(created);
+    }
+
+    void append(Node* n) {
         Node* last = header;
         while (last->next != nullptr) {
             last = last->next;
@@ -207,3 +218,50 @@ class LinkedList {
         return result;
     }
 };
+
+// int main() {
+//     LinkedList ll;
+//     ll.append(1);
+//     ll.append(2);
+//     ll.append(3);
+//     ll.append(4);
+//     ll.printKthFromEnd(1);  // 4
+//     ll.printKthFromEnd(2);  // 3
+//     ll.printKthFromEnd(3);  // 2
+//     ll.printKthFromEnd(4);  // 1
+//     ll.retrieve();
+
+//    ll.reset();
+//    ll.append(1);
+//    ll.append(2);
+//    ll.append(3);
+//    ll.append(4);
+//    int index = 2;
+//    ll.deleteNode(index);
+//    ll.retrieve();  // 1,3,4
+
+//    ll.reset();
+//    ll.append(8);
+//    ll.append(5);
+//    ll.append(2);
+//    ll.append(7);
+//    ll.append(3);
+//    ll.append(4);
+//    ll.retrieve();
+
+//    LinkedList::Node* n1 = ll.get(2);  // 5
+//    std::cout << n1->data << std::endl;
+//    LinkedList::Node* n2 = ll.get(3);  // 2
+//    std::cout << n2->data << std::endl;
+
+//    // ll.partition(5);
+//    LinkedList::Node* sorted = LinkedList::partition(ll.get(1), 5);
+//    while (sorted->next != nullptr) {
+//        std::cout << sorted->data << "->";
+//        sorted = sorted->next;
+//    }
+//    std::cout << sorted->data << std::endl;
+//    ll.retrieve();  // 원본 훼손됨
+
+//    return 0;
+//}

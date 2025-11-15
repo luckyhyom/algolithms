@@ -103,6 +103,31 @@ LinkedList* sum_v2(LinkedList* ll, LinkedList* ll2) {
     return result;
 }
 
+LinkedList* sum_v3(LinkedList::Node* n1, LinkedList::Node* n2, int c) {
+    if (n1 == nullptr && n2 == nullptr) {
+        return nullptr;
+    }
+
+    int sum = n1->data + n2->data + c;
+    int result;
+    if (sum >= 10) {
+        c = 1;
+        result = sum - 10;
+    } else {
+        result = sum;
+        c = 0;
+    }
+
+    LinkedList* ll = new LinkedList();
+    ll->append(result);
+
+    LinkedList* l2 = sum_v3(n1->next, n2->next, c);
+    if (l2 != nullptr) {
+        ll->append(l2->get(1));
+    }
+
+    return ll;
+}
 /**
  * LL에는 값이 1의 자리부터 순차적으로 들어있다.
  * 1200이면 0021
@@ -131,4 +156,20 @@ int main() {
 
     LinkedList* result2 = sum_v2(&ll, &ll2);
     result2->retrieve();
+
+    LinkedList ll3;
+    ll3.append(5);
+    ll3.append(6);
+    ll3.append(7);
+    ll3.append(2);
+
+    LinkedList ll4;
+    ll4.append(6);
+    ll4.append(3);
+    ll4.append(2);
+    ll4.append(1);
+
+    LinkedList* sum3 = sum_v3(ll3.get(1), ll4.get(1), 0);  // 4001
+    std::cout << "FUCK" << std::endl;
+    sum3->retrieve();
 }
