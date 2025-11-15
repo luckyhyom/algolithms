@@ -108,35 +108,21 @@ LinkedList* sum_v3(LinkedList::Node* n1, LinkedList::Node* n2, int c) {
         return nullptr;
     }
 
-    LinkedList::Node* next1 = nullptr;
-    LinkedList::Node* next2 = nullptr;
-    int a = 0;
-    int b = 0;
-
+    int result = c;
     if (n1 != nullptr) {
-        a = n1->data;
-        next1 = n1->next;
+        result += n1->data;
     }
-
     if (n2 != nullptr) {
-        b = n2->data;
-        next2 = n2->next;
+        result += n2->data;
     }
 
-    int sum = a + b + c;
-    int result;
-    if (sum >= 10) {
-        c = 1;
-        result = sum - 10;
-    } else {
-        result = sum;
-        c = 0;
-    }
+    c = result >= 10 ? 1 : 0;
+    result = result % 10;
 
     LinkedList* ll = new LinkedList();
     ll->append(result);
 
-    LinkedList* l2 = sum_v3(next1, next2, c);
+    LinkedList* l2 = sum_v3(n1 != nullptr ? n1->next : nullptr, n2 != nullptr ? n2->next : nullptr, c);
     if (l2 != nullptr) {
         ll->append(l2->get(1));
     }
