@@ -104,11 +104,26 @@ LinkedList* sum_v2(LinkedList* ll, LinkedList* ll2) {
 }
 
 LinkedList* sum_v3(LinkedList::Node* n1, LinkedList::Node* n2, int c) {
-    if (n1 == nullptr && n2 == nullptr) {
+    if (n1 == nullptr && n2 == nullptr && c == 0) {
         return nullptr;
     }
 
-    int sum = n1->data + n2->data + c;
+    LinkedList::Node* next1 = nullptr;
+    LinkedList::Node* next2 = nullptr;
+    int a = 0;
+    int b = 0;
+
+    if (n1 != nullptr) {
+        a = n1->data;
+        next1 = n1->next;
+    }
+
+    if (n2 != nullptr) {
+        b = n2->data;
+        next2 = n2->next;
+    }
+
+    int sum = a + b + c;
     int result;
     if (sum >= 10) {
         c = 1;
@@ -121,7 +136,7 @@ LinkedList* sum_v3(LinkedList::Node* n1, LinkedList::Node* n2, int c) {
     LinkedList* ll = new LinkedList();
     ll->append(result);
 
-    LinkedList* l2 = sum_v3(n1->next, n2->next, c);
+    LinkedList* l2 = sum_v3(next1, next2, c);
     if (l2 != nullptr) {
         ll->append(l2->get(1));
     }
@@ -168,8 +183,9 @@ int main() {
     ll4.append(3);
     ll4.append(2);
     ll4.append(1);
+    ll4.append(5);
 
-    LinkedList* sum3 = sum_v3(ll3.get(1), ll4.get(1), 0);  // 4001
+    LinkedList* sum3 = sum_v3(ll3.get(1), ll4.get(1), 0);  // 54001
     std::cout << "FUCK" << std::endl;
     sum3->retrieve();
 }
