@@ -19,20 +19,12 @@ LinkedList::Node* getIntersection(LinkedList::Node* l1, LinkedList::Node* l2) {
     int len2 = getLength(l2);
 
     if (len1 > len2) {
-        // remove
         for (size_t i = 0; i < len1 - len2; i++) {
-            LinkedList::Node* temp = l1->next;
-            l1->data = l1->next->data;
-            l1->next = l1->next->next;
-            delete temp;
+            l1 = l1->next;
         }
     } else {
-        // remove
         for (size_t i = 0; i < len2 - len1; i++) {
-            LinkedList::Node* temp = l2->next;
-            l2->data = l2->next->data;
-            l2->next = l2->next->next;
-            delete temp;
+            l2 = l2->next;
         }
     }
 
