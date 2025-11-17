@@ -143,12 +143,10 @@ int getLength(LinkedList::Node* node) {
 }
 
 LinkedList::Node* insertBefore(LinkedList::Node* node, int value) {
-    if (node == nullptr) {
-        return node;
-    }
-
     LinkedList::Node* result = new LinkedList::Node(value, 0);
-    result->append(node);
+    if (node != nullptr) {
+        result->append(node);
+    }
     return result;
 }
 
@@ -164,31 +162,22 @@ LinkedList::Node* LPadList(LinkedList::Node* node, int length) {
  * 2. 길이가 짧은 리스트의 길이를 동일하게 설정한다.
  * 3. 맨 마지막 노드부터 더한다.
  * 4. carry를 저장하기위한 포인터 변수 필요하다.
- * 5. result는 왜필요하지?
+ * 5. result(매개변수)는 왜필요하지?
  */
 LinkedList* sum_v4_a(LinkedList::Node* n1, LinkedList::Node* n2, int* c) {
     if (n1 == nullptr) {
-        return nullptr;
+        return new LinkedList();
     }
-
-    // 419 + 034
-
-    LinkedList* result = new LinkedList();
-    LinkedList* next = nullptr;
-    if (n1->next != nullptr) {
-        next = sum_v4_a(n1->next, n2->next, c);
-    }
-
+    LinkedList* result = sum_v4_a(n1->next, n2->next, c);
     int sum = n1->data + n2->data + *c;
     *c = sum >= 10 ? 1 : 0;
     int value = sum % 10;
-    result->append(value);
+    LinkedList::Node* node = insertBefore(result->get(1), value);
+    LinkedList* r = new LinkedList();
+    r->append(node);
 
-    if (next != nullptr) {
-        result->append(next->get(1));
-    }
-
-    return result;
+    // head의 next 즉, 첫번째 node를 현재로서는 바꾸기 어렵네. head를 수정해야하는데 그것에 접근할 수 없으니
+    return r;
 }
 
 LinkedList* sum_v4(LinkedList::Node* n1, LinkedList::Node* n2) {
@@ -202,7 +191,12 @@ LinkedList* sum_v4(LinkedList::Node* n1, LinkedList::Node* n2) {
         n1 = LPadList(n1, n2L - n1L);
     }
     int c = 0;
-    LinkedList* result = sum_v4_a(n1, n2, &c);
+    LinkedList* result = new LinkedList();
+    LinkedList* list = sum_v4_a(n1, n2, &c);
+    if (c == 1) {
+        result->append(1);
+    }
+    result->append(list->get(1));
     return result;
 }
 
@@ -255,11 +249,11 @@ int main() {
     ll.reset();
     ll2.reset();
 
-    ll.append(4);
+    ll.append(9);
     ll.append(1);
     ll.append(9);
 
-    ll2.append(3);
+    ll2.append(8);
     ll2.append(4);
     LinkedList* sum4 = sum_v4(ll.get(1), ll2.get(1));  // 54001
     sum4->retrieve();
