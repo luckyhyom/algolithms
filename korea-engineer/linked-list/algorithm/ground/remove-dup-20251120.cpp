@@ -1,4 +1,4 @@
-#include "../linked-list.cpp"
+#include "../../linked-list.cpp"
 
 // two pointer
 void removeDups(LinkedList* ll) {
@@ -7,6 +7,8 @@ void removeDups(LinkedList* ll) {
         LinkedList::Node* b = a;
         while (b->next != nullptr) {
             if (b->next->data == a->data) {
+                // 이 부분 순서가 진짜 헷갈리네
+                // runner는 검증 완료된 노드이고, runner의 다음 노드와 비교해야된다. 검증되면 runner는 다음 노드로 이동.
                 LinkedList::Node* temp = b->next;
                 b->next = b->next->next;
                 delete temp;
