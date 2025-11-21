@@ -26,7 +26,7 @@ int main() {
     ll.append(3);
     ll.append(4);
     ll.append(4);
-    ll.append(4);
+    ll.append(1);
     ll.retrieve();
     ll.removeDups();
     ll.retrieve();
