@@ -1,13 +1,11 @@
 #include "../linked-list.cpp"
 
-// 1. 맨 뒤 노드 제거 불가
-// 2. index가 길이를 초과하는 값일 경우 예외처리
-void deleteNode(LinkedList::Node* node, int index) {
-    for (size_t i = 1; i < index; i++) {
-        if (node->next == nullptr) {
-            return;
-        }
-        node = node->next;
+// 문제: 중간에 있는 노드를 제거하기
+// 1. 첫번째 노드와 맨 뒤 노드 제거 불가하다.
+// 2. index가 길이를 초과하는 값일 경우 예외처리하기
+void deleteNode(LinkedList::Node* node) {
+    if (node->next == nullptr) {
+        return;
     }
     LinkedList::Node* temp = node->next;
     node->data = node->next->data;
@@ -23,8 +21,7 @@ int main() {
     ll.append(4);
     ll.retrieve();  // 1,2,3,4
 
-    int index = 2;
-    deleteNode(ll.get(1), index);
+    deleteNode(ll.get(3));
     ll.retrieve();  // 1,3,4
     return 0;
 }
