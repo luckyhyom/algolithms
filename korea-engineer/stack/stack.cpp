@@ -50,21 +50,21 @@ class Stack {
     bool isEmpty() { return this->top != nullptr ? 0 : 1; }
 };
 
-int main() {
-    Stack s;
-    s.push(1);
-    s.push(2);
-    s.push(3);
-    s.push(4);
+// int main() {
+//     Stack s;
+//     s.push(1);
+//     s.push(2);
+//     s.push(3);
+//     s.push(4);
 
-    std::cout << s.pop() << std::endl;
-    std::cout << s.pop() << std::endl;
-    std::cout << s.pop() << std::endl;
-    std::cout << s.peek() << std::endl;
-    std::cout << std::boolalpha << s.isEmpty() << std::endl;
-    std::cout << s.pop() << std::endl;
-    std::cout << s.isEmpty() << std::endl;
+//    std::cout << s.pop() << std::endl;
+//    std::cout << s.pop() << std::endl;
+//    std::cout << s.pop() << std::endl;
+//    std::cout << s.peek() << std::endl;
+//    std::cout << std::boolalpha << s.isEmpty() << std::endl;
+//    std::cout << s.pop() << std::endl;
+//    std::cout << s.isEmpty() << std::endl;
 
-    s.push(1);
-    std::cout << s.pop() << std::endl;
-}
+//    s.push(1);
+//    std::cout << s.pop() << std::endl;
+//}
