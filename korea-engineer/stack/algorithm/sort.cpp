@@ -6,20 +6,10 @@ Stack* sort(Stack* s1) {
 
     while (s1->isEmpty() != true) {
         int x = s1->pop();
-        int y = s2->pop();
-
-        if (x >= y) {
-            s2->push(y);
-            s2->push(x);
-        } else {
-            int z = y;
-            while (z > x || s2->isEmpty() != true) {
-                s1->push(z);
-                z = s2->pop();
-            }
-            s2->push(z);
-            s2->push(x);
+        while (s2->isEmpty() != true && s2->peek() > x) {
+            s1->push(s2->pop());
         }
+        s2->push(x);
     }
 
     return s2;
