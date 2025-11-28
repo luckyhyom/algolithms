@@ -1,19 +1,25 @@
 #include <iostream>
+#include <list>
+#include <string>
 
+/**
+ * 템플릿 매개변수가 원시 타입일 때와 구조체 일 때 따로 만들어야하나?
+ * 1. 매개변수 자료형이 T*이면 원시 타입은 인자로 사용하기 어렵다. func(&1)
+ * 2. 원시 타입마다 다 만들어줘야하나?
+ */
+template <typename T>
 class LinkedList {
    public:
     class Node {
-       public:
-        Node(int n, int id) : data(n), id(id) {}
-        int data;
-        Node* next;
-        int id;
+        Node() : data() {}
 
-        static Node* CreateNode() { return new Node(0, 0); }
-        void append(Node* n) {
-            n->id = this->id + 1;
-            this->next = n;
-        }
+       public:
+        Node(T n) : data(n) {}
+        T data;
+        Node* next;
+
+        static Node* CreateNode() { return new Node(); }
+        void append(Node* n) { this->next = n; }
     };
 
     Node* header;
@@ -24,12 +30,12 @@ class LinkedList {
         currentNode = header;
     }
 
-    void append(int n) {
+    void append(T n) {
         Node* last = header;
         while (last->next != nullptr) {
             last = last->next;
         }
-        Node* created = new Node(n, 1);
+        Node* created = new Node(n);
         last->append(created);
     }
 
@@ -41,7 +47,7 @@ class LinkedList {
         last->append(n);
     }
 
-    void remove(int n) {
+    void remove(T n) {
         Node* last = header;
         while (last->next != nullptr) {
             if (last->next->data == n) {
@@ -64,53 +70,6 @@ class LinkedList {
         std::cout << "END" << std::endl;
     }
 
-    void removeDups() {
-        Node* n = header->next;
-        while (n != nullptr && n->next != nullptr) {
-            Node* r = n;
-
-            while (r->next != nullptr) {
-                if (n->data == r->next->data) {
-                    Node* found = r->next;
-                    r->next = r->next->next;
-                    delete found;
-                } else {
-                    r = r->next;
-                }
-            }
-
-            n = n->next;
-        }
-    }
-
-    void printKthFromEnd(int k) {
-        int count = 0;
-        kthFromEnd(header->next, k, &count);
-    }
-
-    void deleteNode(int index) {
-        Node* n = header;
-        int length = 0;
-        while (n != nullptr && n->next != nullptr) {
-            ++length;
-            n = n->next;
-        }
-
-        if (index > length) {
-            return;
-        }
-
-        Node* found = header;
-        for (size_t i = 0; i < index; i++) {
-            found = found->next;
-        }
-
-        Node* target = found->next;
-        found->data = found->next->data;
-        found->next = found->next->next;
-        delete target;
-    }
-
     void reset() {
         std::cout << "Reset Linked List.." << std::endl;
         Node* n = header;
@@ -120,15 +79,6 @@ class LinkedList {
             delete deleted;
         }
     }
-
-    bool next() {
-        if (currentNode != nullptr && currentNode->next != nullptr) {
-            currentNode = currentNode->next;
-            return true;
-        } else {
-            return false;
-        }
-    };
 
     Node* get(int index) {
         Node* result = header;
@@ -140,128 +90,16 @@ class LinkedList {
         }
         return result;
     }
-
-    void resetToHead() { currentNode = header; }
-
-    int getData() {
-        if (currentNode != nullptr) {
-            return currentNode->data;
-        }
-        return 0;
-    };
-
-    static Node* partition(Node* node, int x) {
-        Node* head = node;
-        Node* tail = node;
-
-        // node의 값이 수정된다는 것을 유의해야한다. (node의 값이 수정되어서 헷갈림)
-        while (node != nullptr) {
-            Node* next = node->next;
-            node->next = nullptr;
-            if (node->data < x) {
-                node->next = head;
-                head = node;
-            } else {
-                tail->next = node;
-                tail = node;
-            }
-            node = next;
-        }
-
-        return head;
-    }
-
-    // Node* partition2(int x) {}
-
-    void partitionV2(int x) {
-        Node* node = header;
-        LinkedList* lager = new LinkedList();
-        while (node != nullptr && node->next != nullptr) {
-            if (node->next->data >= x) {
-                lager->append(node->next->data);
-
-                Node* deleted = node->next;
-                node->next = node->next->next;
-                delete deleted;
-            } else {
-                node = node->next;
-            }
-        }
-
-        /**
-         * Node 혹은 data를 순차적으로 외부에 반환해야한다. 📌
-         */
-        lager->resetToHead();
-        while (lager->next() != false) {
-            this->append(lager->getData());
-        }
-    }
-
-   private:
-    Node* kthFromEnd(Node* node, int k, int* count) {
-        Node* result = nullptr;
-        if (node != nullptr && node->next != nullptr) {
-            result = kthFromEnd(node->next, k, count);
-            if (result != nullptr) {
-                return result;
-            }
-        }
-
-        ++(*count);
-        if (*count == k) {
-            std::cout << node->data << std::endl;
-            result = node;
-        } else {
-            result = nullptr;
-        }
-
-        return result;
-    }
 };
 
 // int main() {
-//     LinkedList ll;
+//     // LinkedList<std::string> ll;
+//     LinkedList<int> ll;
 //     ll.append(1);
 //     ll.append(2);
 //     ll.append(3);
 //     ll.append(4);
-//     ll.printKthFromEnd(1);  // 4
-//     ll.printKthFromEnd(2);  // 3
-//     ll.printKthFromEnd(3);  // 2
-//     ll.printKthFromEnd(4);  // 1
 //     ll.retrieve();
-
-//    ll.reset();
-//    ll.append(1);
-//    ll.append(2);
-//    ll.append(3);
-//    ll.append(4);
-//    int index = 2;
-//    ll.deleteNode(index);
-//    ll.retrieve();  // 1,3,4
-
-//    ll.reset();
-//    ll.append(8);
-//    ll.append(5);
-//    ll.append(2);
-//    ll.append(7);
-//    ll.append(3);
-//    ll.append(4);
-//    ll.retrieve();
-
-//    LinkedList::Node* n1 = ll.get(2);  // 5
-//    std::cout << n1->data << std::endl;
-//    LinkedList::Node* n2 = ll.get(3);  // 2
-//    std::cout << n2->data << std::endl;
-
-//    // ll.partition(5);
-//    LinkedList::Node* sorted = LinkedList::partition(ll.get(1), 5);
-//    while (sorted->next != nullptr) {
-//        std::cout << sorted->data << "->";
-//        sorted = sorted->next;
-//    }
-//    std::cout << sorted->data << std::endl;
-//    ll.retrieve();  // 원본 훼손됨
 
 //    return 0;
 //}
