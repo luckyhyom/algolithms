@@ -40,7 +40,7 @@ class CompleteBinaryTree {
             return;
         }
 
-        Node* last_node = this->getLast(this->root);
+        Node* last_node = this->getInsertionParent(this->root);
         this->addChild(last_node, value);
     }
 
@@ -57,7 +57,7 @@ class CompleteBinaryTree {
         top_level = new_node->level;
     }
 
-    Node* getLast(Node* node) {
+    Node* getInsertionParent(Node* node) {
         Node* n = preorder(node);
         if (n != nullptr) {
             return n;
