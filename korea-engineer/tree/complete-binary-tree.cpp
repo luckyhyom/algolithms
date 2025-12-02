@@ -121,24 +121,24 @@ class CompleteBinaryTree {
     // 마지막 노드를 루트로 바꾸고 루트부터 자식 노드와 비교 (배열의 중간에 원소를 삽입해서 기존 원소를 밀어내는 것과 유사한 느낌)
 };
 
-int main() {
-    CompleteBinaryTree<int> t;
-    t.add(1);
-    t.add(2);
-    t.add(3);
-    t.add(4);
-    t.add(5);
-    t.add(6);
-    t.printPreorder(t.root);
-    /**
-     * 완전 트리라면..
-     *        (1)
-     *    (2)     (3)
-     *  (4) (5) (6)
-     *
-     * 출력 순서는.. 124536
-     */
+// int main() {
+//     CompleteBinaryTree<int> t;
+//     t.add(1);
+//     t.add(2);
+//     t.add(3);
+//     t.add(4);
+//     t.add(5);
+//     t.add(6);
+//     t.printPreorder(t.root);
+//     /**
+//      * 완전 트리라면..
+//      *        (1)
+//      *    (2)     (3)
+//      *  (4) (5) (6)
+//      *
+//      * 출력 순서는.. 124536
+//      */
 
-    std::cout << t.top_level << std::endl;
-    return 0;
-}
+//    std::cout << t.top_level << std::endl;
+//    return 0;
+//}
