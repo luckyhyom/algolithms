@@ -42,6 +42,23 @@ class MinHeap : public CompleteBinaryTree<T> {
             }
         }
     }
+
+    /**
+     * 우와 Tree 구조로 min heap을 구현하려니까 엄청 번거롭네!
+     * pop하려면 마지막에 추가된 노드를 조회해야하는데 마지막에 추가된 노드를 조회하는게 간단하지 않네!
+     */
+    T pop() {
+        typename CompleteBinaryTree<T>::Node* left = this->root->left;
+        typename CompleteBinaryTree<T>::Node* right = this->root->right;
+        T result = this->root->data;
+
+        typename CompleteBinaryTree<T>::Node* last_parent = this->getInsertionParent(this->root);
+        typename CompleteBinaryTree<T>::Node* last_node = this->getInsertionParent(this->root);
+        if (last_parent->right != nullptr) {
+        }
+
+        return 0;
+    }
 };
 
 int main() {

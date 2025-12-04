@@ -1,85 +1,54 @@
-/**
- * 한 쪽은 넣기만 하고, 한쪽은 꺼내기만 한다.
- * FIFO: First In First Out
- */
-
 #include <iostream>
 
-
-
-
-template <typename T>
 class Queue {
     class Node {
-    public:
-        T data;
+       public:
+        int data;
         Node* next;
-        // Note: Reference 복습
-        Node(const T data): data(data), next(nullptr) {}
+
+        Node(int v) : data(v) {}
     };
-    Node *first;
-    Node *last;
 
-    public:
-        Queue() : first(nullptr), last(nullptr) {}   // ← 추가: 초기화
-        void add(T data) {
-            Node *newNode = new Node(data);
-            // 첫번째 node일 경우 last의 next는 설정하지 않는다.
-            if(this->first == nullptr) {
-                this->first = newNode;
-                this->last = newNode;
-                return;
-            }
+    Node* head = nullptr;
+    Node* tail = nullptr;
 
-            /**
-             * Note: 이 두 라인의 순서가 바뀌면 안된다. 방어로직을 짤 수 있을까?
-             */
-            this->last->next = newNode;
-            this->last = newNode;
+   public:
+    Queue() {}
+
+    void add(int v) {
+        Node* new_node = new Node(v);
+        if (head == nullptr) {
+            this->head = new_node;
+        } else {
+            this->tail->next = new_node;
+        }
+        this->tail = new_node;
+    }
+
+    int remove() {
+        if (this->head == nullptr) {
+            return 0;
         }
 
-        /**
-         * first를 바로 다음 Node로 교체해야한다.
-         * Node가 자신의 앞, 뒤 Node를 알고 있다면 Queue가 모든 Node를 알고 있지 않아도 된다.
-         * 
-         * Note:
-         *  Node의 개수가 고정되어 있지 않다.
-         */
-        void remove() {
-            if (this->first == nullptr) { throw "Queue is already Empty."; }
-            Node* old = this->first;
-            this->first = this->first->next;
-            if (this->first == nullptr) this->last = nullptr; // 마지막 제거 시 정리
-            delete old;
+        int result = this->head->data;
+        Node* temp = this->head;
+
+        this->head = this->head->next;
+        delete temp;
+
+        if (this->head == nullptr) {
+            this->tail = nullptr;  // add에서 처리하고있긴 하지만 명시성을위해
         }
 
-        T peek() {
-            if (this->first == nullptr) { throw "Queue is Empty"; }
-            return this->first->data;
-        }
+        return result;
+    }
 
-        bool isEmpty() {
-            return this->first == nullptr;
+    int peek() {
+        if (this->head == nullptr) {
+            return 0;
         }
+        return this->head->data;
+    }
+
+    bool isEmpty() { return this->head != nullptr ? 0 : 1; }
 };
-
-
-
-
-int main() {
-    Queue<int> *q = new Queue<int>();
-    q->add(1);
-    q->add(2);
-    q->add(3);
-    q->add(4);
-
-    q->remove();
-    q->remove();
-    std::cout << q->peek() << std::endl;
-    q->remove();
-    std::cout << std::boolalpha << q->isEmpty() << std::endl;
-    q->remove();
-    std::cout << std::boolalpha << q->isEmpty() << std::endl;
-    
-    return 0;
-}
