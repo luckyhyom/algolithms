@@ -37,3 +37,29 @@ class Node {
 >   - "A에서 B"라는 조건이 아닌 그냥 "B"를 찾는 것이라면 배열 순회해서 검색하면 된다.
 >
 > 4. Tree는 Root Node 한개를 가지는 것에 반해, Graph는 전체 Node를 배열(리스트)에 저장해두며 각 Node는 인접 Node의 정보를 가진다.
+
+
+### 구현
+1. Node는 인접 노드에 대한 정보를 가지고 있다.
+```cpp
+class Node {
+    int data;
+    LinkedList<Node*> adjacent;
+};
+```
+> [!NOTE]
+> LinkedList를 사용하는 이유는 특정 위치의 노드에 접근하지 않고 순차적으로 조회해도 되기 때문이다.
+> 또한 조회 로직이 좀더 간단하다.
+
+```cpp
+while(node->next != nullptr) {
+    node = node->next;
+}
+```
+
+1. Graph는 Array에 모든 노드를 저장한다.
+```cpp
+class Graph {
+    std::vector<Node*> nodes;
+};
+```
