@@ -39,6 +39,27 @@ class Node {
 > 4. Tree는 Root Node 한개를 가지는 것에 반해, Graph는 전체 Node를 배열(리스트)에 저장해두며 각 Node는 인접 Node의 정보를 가진다.
 
 
+### 관계 표현 방법
+
+1. 2차원 배열을 이용한 매트릭스
+```md
+   a  b  c  d
+a  0  1  0  0
+b  1  0  0  1
+c  0  0  0  1
+d  0  1  1  0
+```
+
+2. 배열과 링크드리스트를 이용
+```
+[ a b c d ] # Array
+  | | | |   # LinkedList
+  b a d b
+    |   |
+    d   c
+```
+
+
 ### 구현
 1. Node는 인접 노드에 대한 정보를 가지고 있다.
 ```cpp
