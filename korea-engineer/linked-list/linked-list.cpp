@@ -11,10 +11,10 @@ template <typename T>
 class LinkedList {
    public:
     class Node {
-        Node() : data() {}
+        Node() : data() { this->next = nullptr; }
 
        public:
-        Node(T n) : data(n) {}
+        Node(T n) : data(n) { this->next = nullptr; }
         T data;
         Node* next;
 
@@ -89,6 +89,27 @@ class LinkedList {
             }
         }
         return result;
+    }
+
+    bool includes(T target) {
+        Node* last = this->header;
+        while (last->next) {
+            last = last->next;
+            if (last->data == target) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    int getCount() {
+        int count = 0;
+        Node* last = this->header;
+        while (last->next) {
+            last = last->next;
+            count++;
+        }
+        return count;
     }
 };
 
