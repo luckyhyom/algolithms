@@ -1,12 +1,13 @@
 #include <iostream>
 
+template <typename T>
 class Stack {
     // Node는 자료구조의 최소 단위의 요소이다. 인터페이스, 알고리즘에 따라 자료구조가 정의된다.
     class Node {
        public:
-        int data;
+        T data;
         Node* next = nullptr;
-        Node(int n) : data(n) {};
+        Node(T n) : data(n) {};
     };
 
     // Node* head = nullptr;  // head는 진입점으로서 항상 필요하다. ❌
@@ -20,12 +21,12 @@ class Stack {
    public:
     Stack() {}
 
-    int pop() {
+    T pop() {
         if (this->top == nullptr) {
             return 0;
         }
 
-        int result = this->top->data;
+        T result = this->top->data;
         Node* temp = this->top;
         this->top = this->top->next;
         delete temp;
@@ -34,13 +35,13 @@ class Stack {
     }
 
     // *기존 노드를 새로운 노드의 다음 노드로 설정
-    void push(int value) {
+    void push(T value) {
         Node* temp = this->top;
         this->top = new Node(value);
         this->top->next = temp;
     }
 
-    int peek() {
+    T peek() {
         if (this->top == nullptr) {
             return 0;
         }
