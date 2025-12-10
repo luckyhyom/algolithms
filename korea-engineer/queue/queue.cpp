@@ -1,12 +1,14 @@
 #include <iostream>
+#include <optional>
 
+template <typename T>
 class Queue {
     class Node {
        public:
-        int data;
+        T data;
         Node* next;
 
-        Node(int v) : data(v) {}
+        Node(T v) : data(v) {}
     };
 
     Node* head = nullptr;
@@ -15,7 +17,7 @@ class Queue {
    public:
     Queue() {}
 
-    void add(int v) {
+    void add(T v) {
         Node* new_node = new Node(v);
         if (head == nullptr) {
             this->head = new_node;
@@ -25,12 +27,12 @@ class Queue {
         this->tail = new_node;
     }
 
-    int remove() {
+    std::optional<T> remove() {
         if (this->head == nullptr) {
-            return 0;
+            return nullptr;
         }
 
-        int result = this->head->data;
+        T result = this->head->data;
         Node* temp = this->head;
 
         this->head = this->head->next;
@@ -43,9 +45,9 @@ class Queue {
         return result;
     }
 
-    int peek() {
+    std::optional<T> peek() {
         if (this->head == nullptr) {
-            return 0;
+            return nullptr;
         }
         return this->head->data;
     }
