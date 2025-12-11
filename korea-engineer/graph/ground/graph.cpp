@@ -60,6 +60,41 @@ class Graph {
 
         std::cout << " " << std::endl;
     }
+
+    void bfs() {
+        Node* root = this->nodes[0];
+        Queue<Node*> queue;
+        queue.add(root);
+        root->marked = true;
+
+        while (queue.isEmpty() == false) {
+            std::optional<Node*> optNode = queue.remove();
+
+            if (!optNode.has_value()) {
+                continue;
+            }
+
+            Node* node = optNode.value();
+
+            // LinkedList 마지막 노드까지 순회할 수 있는 기능 필요
+            typename LinkedList<Node*>::Node* adjacent = node->adjacent.header;
+            while (adjacent->next != nullptr) {
+                adjacent = adjacent->next;
+                std::cout << node->data << "'s " << "adjacent.." << adjacent->data->data << std::endl;
+                if (adjacent->data->marked == false) {
+                    adjacent->data->marked = true;
+                    queue.add(adjacent->data);
+                }
+            }
+
+            std::cout << node->data << std::endl;
+        }
+    }
+
+    // void dfsRecursion() {
+    //     Node* root = nodes[0];
+
+    //}
 };
 
 /**
@@ -83,5 +118,6 @@ int main() {
     g.addEdge(5, 6);
     g.addEdge(5, 7);
     g.addEdge(6, 8);
-    g.dfs();
+    // g.dfs(); // 0,1,3,5,7,6,8,4,2
+    g.bfs();  // 0,1,2,3,4,5,6,7,8
 }
