@@ -39,8 +39,9 @@ class Graph {
         }
     }
 
-    void dfs() {
-        Node* root = nodes[0];
+    void dfs() { dfs(0); }
+    void dfs(int index) {
+        Node* root = this->nodes[index];
         Stack<Node*> stack;
         stack.push(root);
         root->marked = true;
@@ -59,6 +60,42 @@ class Graph {
         }
 
         std::cout << " " << std::endl;
+    }
+    /**
+     * - 재귀를 한다.
+     * - 출력을 먼저 한다.
+     * - 자식 노드를 인자로 넣는다.
+     * - nullptr이면 멈춘다.
+     *
+     * dfs(N node) {
+     * if(node = nullptr ) {
+     * return
+     * }
+     * 	cout << node.data;
+     *
+     * 	child = node.child
+     *
+     * while(child != nullptr) (
+     * 		if(child->next->marked == false)
+     *		dfs(child->next)
+     * )
+     * }
+     *
+     */
+    void dfsRecursion(Node* node) {
+        if (node == nullptr) {
+            return;
+        }
+        node->marked = true;
+        std::cout << node->data << std::endl;
+
+        typename LinkedList<Node*>::Node* adjacent = node->adjacent.header;
+        while (adjacent->next != nullptr) {
+            adjacent = adjacent->next;
+            if (adjacent->data->marked == false) {
+                dfsRecursion(adjacent->data);
+            }
+        }
     }
 
     void bfs() {
@@ -90,11 +127,6 @@ class Graph {
             std::cout << node->data << std::endl;
         }
     }
-
-    // void dfsRecursion() {
-    //     Node* root = nodes[0];
-
-    //}
 };
 
 /**
@@ -106,18 +138,19 @@ class Graph {
  * 2 -- 4    \
  *            6 - 8
  */
-int main() {
-    Graph<int> g = Graph<int>(9);
-    g.addEdge(0, 1);
-    g.addEdge(1, 2);
-    g.addEdge(1, 3);
-    g.addEdge(2, 4);
-    g.addEdge(2, 3);
-    g.addEdge(3, 4);
-    g.addEdge(3, 5);
-    g.addEdge(5, 6);
-    g.addEdge(5, 7);
-    g.addEdge(6, 8);
-    // g.dfs(); // 0,1,3,5,7,6,8,4,2
-    g.bfs();  // 0,1,2,3,4,5,6,7,8
-}
+// int main() {
+//     Graph<int> g = Graph<int>(9);
+//     g.addEdge(0, 1);
+//     g.addEdge(1, 2);
+//     g.addEdge(1, 3);
+//     g.addEdge(2, 4);
+//     g.addEdge(2, 3);
+//     g.addEdge(3, 4);
+//     g.addEdge(3, 5);
+//     g.addEdge(5, 6);
+//     g.addEdge(5, 7);
+//     g.addEdge(6, 8);
+//     // g.dfs();  // 0,1,3,5,7,6,8,4,2
+//     // g.dfsRecursion(g.nodes[0]);  // 0,1,2,4,3,5,6,8,7
+//     // g.bfs();  // 0,1,2,3,4,5,6,7,8
+// }
