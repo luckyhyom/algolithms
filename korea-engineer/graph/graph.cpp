@@ -1,8 +1,8 @@
 #include <vector>
 
-#include "../../linked-list/linked-list.cpp"
-#include "../../queue/queue.cpp"
-#include "../../stack/stack.cpp"
+#include "../linked-list/linked-list.cpp"
+#include "../queue/queue.cpp"
+#include "../stack/stack.cpp"
 
 template <typename T>
 class Graph {
@@ -61,27 +61,7 @@ class Graph {
 
         std::cout << " " << std::endl;
     }
-    /**
-     * - 재귀를 한다.
-     * - 출력을 먼저 한다.
-     * - 자식 노드를 인자로 넣는다.
-     * - nullptr이면 멈춘다.
-     *
-     * dfs(N node) {
-     * if(node = nullptr ) {
-     * return
-     * }
-     * 	cout << node.data;
-     *
-     * 	child = node.child
-     *
-     * while(child != nullptr) (
-     * 		if(child->next->marked == false)
-     *		dfs(child->next)
-     * )
-     * }
-     *
-     */
+
     void dfsRecursion(Node* node) {
         if (node == nullptr) {
             return;
@@ -126,5 +106,51 @@ class Graph {
 
             std::cout << node->data << std::endl;
         }
+    }
+
+    void initMarks() {
+        for (auto&& node : nodes) {
+            node->marked = false;
+        }
+    }
+
+    bool search(int i1, int i2) { return search(nodes[i1], nodes[i2]); }
+
+    bool search(Node* start, Node* end) {
+        initMarks();
+
+        Queue<Node*> queue;
+        queue.add(start);
+        start->marked = true;
+
+        while (queue.isEmpty() == false) {
+            std::optional<Node*> optNode = queue.remove();
+
+            if (!optNode.has_value()) {
+                continue;
+            }
+
+            Node* node = optNode.value();
+
+            std::cout << "!!" << node->data << std::endl;
+            std::cout << "end: " << end->data << std::endl;
+
+            if (node == end) {
+                std::cout << "good? " << end->data << std::endl;
+                return true;
+            }
+
+            typename LinkedList<Graph::Node*>::Node* adjacent = node->adjacent.header;
+            for (size_t i = 0; i < node->adjacent.getCount(); i++) {
+                adjacent = adjacent->next;
+                if (adjacent != nullptr) {
+                    if (adjacent->data->marked == false) {
+                        adjacent->data->marked = true;
+                        queue.add(adjacent->data);
+                    }
+                }
+            }
+        }
+        return false;
     }
 };
