@@ -97,7 +97,6 @@ class Graph {
             typename LinkedList<Node*>::Node* adjacent = node->adjacent.header;
             while (adjacent->next != nullptr) {
                 adjacent = adjacent->next;
-                std::cout << node->data << "'s " << "adjacent.." << adjacent->data->data << std::endl;
                 if (adjacent->data->marked == false) {
                     adjacent->data->marked = true;
                     queue.add(adjacent->data);
@@ -132,11 +131,7 @@ class Graph {
 
             Node* node = optNode.value();
 
-            std::cout << "!!" << node->data << std::endl;
-            std::cout << "end: " << end->data << std::endl;
-
             if (node == end) {
-                std::cout << "good? " << end->data << std::endl;
                 return true;
             }
 
