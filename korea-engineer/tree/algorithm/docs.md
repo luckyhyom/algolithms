@@ -11,3 +11,10 @@ int mid = (start + end) / 2; // 배열을 자르지 않고 범위를 지정할 �
   2   4
 1       5
 ```
+
+
+### 이진트리를 레벤단위 리스트로 변형하기
+- 언제 필요한 기술인가?
+  - [UI 컴포넌트](https://toss.tech/article/frontend-tree-structure)
+  - 반복적인(잦은) 레벨 단위의 작업이 필요할 때
+  - 등
