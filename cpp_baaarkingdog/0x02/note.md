@@ -36,3 +36,25 @@ int main(void) {
 
 while(ss >> value) { ... }
 ```
+
+---
+기본적으로 cin/cout ↔ scanf/printf는 같은 버퍼를 공유하도록 동기화
+
+```cpp
+ios::sync_with_stdio(false);  
+// C stdio와 C++ iostream 간의 동기화를 해제하여 입출력 성능을 향상시킨다.
+
+cin.tie(nullptr);             
+// cin 사용 시 cout.flush()를 자동으로 호출하지 않도록 하여 불필요한 flush를 방지한다.
+```
+
+왜 BOJ에선 문제 없나?
+
+BOJ 스타일 코드:
+```cpp
+cin >> n;
+cout << n;
+```
+- 출력 전에 입력 안내 메시지 없음
+- 마지막에 한 번에 출력
+- 프로그램 종료 시 자동 flush
