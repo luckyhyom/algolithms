@@ -1,31 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-/**
- *
- * 10 20 30
- *
- * (1)
- * temp: 30
- * 10 20 30 40
- *
- * (2)
- * temp: 30
- * 10 20 20 40
- * (40을 temp에 저장하고 temp에 있던 값으로 대체해야함)
- *
- * (3)
- * temp: 30
- * 10 20 20
- *
- *
- * temp: 30
- * 10 20 20 0
- *
- * temp: 30
- * 10 20 20 30
- */
-
 void insert(int idx, int num, int arr[], int& len) {
     // (1) 길이를 1 더한다.
     ++len;
