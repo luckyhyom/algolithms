@@ -11,6 +11,12 @@ if(..) {
 }
 ```
 
+> [!NOTE]
+> 1. 추가 버퍼를 사용하면 시간 복잡도 O(N), 공간 복잡도 O(N)
+> 2. 위의 알고리즘은 추가 버퍼를 사용하지 않고 데이터 정렬이 되지 않은 상태에서 적용한다.
+>    시간 복잡도 O(N^2), 공간 복잡도 O(1)
+
+
 ### 끝에서 k 번째 node 검색
 [재귀](https://www.geeksforgeeks.org/dsa/introduction-to-recursion-2/)를 사용한다.
 
