@@ -2,25 +2,53 @@
 
 using namespace std;
 
-// 사용자 지정 배열 최대 길이 100000 -> 필요 없을 것 같은데 함정인가?
-// 배열에 있는 자연수 최댓값 1000000
-// i+j = x의 최댓값 2000000
+// 1. 배열을 함수 밖으로 뺍니다. (전역 변수) 📌
+// 자동으로 0으로 초기화되며, 스택 오버플로우 걱정이 없습니다.
+int arr[2000001];
+int checked[2000001];
+int typed_int[1000001];
+
 int main() {
-    int arr[1000001] = {0};
-    int n, x, result_count = 0;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int n, x = 0;
+    int result_count = 0;
 
     cin >> n;
 
-    for (size_t i = 0; i < n; i++) { /* code */
+    if (n > 100000) {
+        cout << 0;
+        return 0;
+    }
+
+    for (size_t i = 0; i < n; i++) {
         int type_int = 0;
         cin >> type_int;
         arr[type_int]++;
+        typed_int[i] = type_int;
     }
 
     cin >> x;
 
+    if (x >= 2000000) {
+        cout << 0;
+        return 0;
+    }
+
+    // 199 = 100 + 99
+    // 199 - 99
+
     for (size_t i = 0; i < n; i++) {
-        ㄴ if (arr[i] != 0 && arr[x - i] != 0) { result_count++; }
+        // 음수 방지 📌
+        if ((x - typed_int[i]) < 0) continue;
+        if (arr[x - typed_int[i]] > 0 && checked[typed_int[i]] == 0 && checked[x - typed_int[i]] == 0) {
+            // x/2 케이스 방지 📌 (x가 10일 때 그 절반의 값인 5는 두 수의 합이 아니므로 제외한다.)
+            if (typed_int[i] == x - typed_int[i]) continue;
+            result_count++;
+            checked[typed_int[i]]++;
+            checked[x - typed_int[i]]++;
+        }
     }
 
     cout << result_count;
