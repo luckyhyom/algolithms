@@ -1,5 +1,5 @@
 // std::list 사용법을 몰라서 한참 헤멨다. 직접 구현한 것만 사용하다보니.. 익숙치 않다.
-// cpp 사용법은 공부하지 말고 빨리빨리 검색해서 넘어가자.
+// cpp 사용법은 공부하지 말고 빨리빨리 검색해서 넘어가자. 📌
 
 #include <bits/stdc++.h>
 
@@ -24,7 +24,7 @@ void left(list<Node*>& l, list<Node*>::iterator& cursor) {
 }
 
 void right(list<Node*>& l, list<Node*>::iterator& cursor) {
-    if (cursor == l.end()) return;
+    if (std::next(cursor) == l.end()) return;
     l.splice(cursor, l, std::next(cursor));
 }
 

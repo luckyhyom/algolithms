@@ -2,7 +2,15 @@
     "workbench.colorCustomizations": {
         "activityBar.background": "#273206",
         "titleBar.activeBackground": "#374508",
-        "titleBar.activeForeground": "#F7FCE9"
+        "titleBar.activeForeground": "#F7FCE9",
+        "titleBar.inactiveBackground": "#273206",
+        "titleBar.inactiveForeground": "#F7FCE9",
+        "statusBar.background": "#273206",
+        "statusBar.foreground": "#F7FCE9",
+        "statusBar.debuggingBackground": "#273206",
+        "statusBar.debuggingForeground": "#F7FCE9",
+        "statusBar.noFolderBackground": "#273206",
+        "statusBar.noFolderForeground": "#F7FCE9"
     },
     "files.associations": {
       "ostream": "cpp",
