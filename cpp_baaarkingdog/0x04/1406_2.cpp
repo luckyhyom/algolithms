@@ -31,8 +31,10 @@ int main() {
         } else if (command == 'D') {
             if (cursor != text.end()) cursor++;
         } else if (command == 'B') {
-            cursor--;
-            if (cursor != text.begin()) text.erase(cursor);
+            if (cursor != text.begin()) {
+                cursor--;
+                cursor = text.erase(cursor);  // 삭제된 노드의 다음 노드를 가리키는 iterator를 반환한다. 📌
+            }
         }
     }
 
